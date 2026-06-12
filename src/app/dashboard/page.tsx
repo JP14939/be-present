@@ -21,6 +21,13 @@ export default async function DashboardPage() {
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 29)
   thirtyDaysAgo.setHours(0, 0, 0, 0)
 
+  const { count: sessionCount } = await supabase
+    .from('deep_work_sessions')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+
+  const isFirstRun = (sessionCount ?? 0) === 0
+
   const { data: events } = await supabase
     .from('health_events')
     .select('delta, created_at')
@@ -64,6 +71,7 @@ export default async function DashboardPage() {
       email={user.email!}
       initialHealth={health}
       chartData={chartData}
+      isFirstRun={isFirstRun}
     />
   )
 }

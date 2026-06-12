@@ -17,11 +17,14 @@ interface Props {
   email: string
   initialHealth: number
   chartData: ChartPoint[]
+  isFirstRun: boolean
 }
 
-export default function DashboardClient({ email, initialHealth, chartData }: Props) {
+export default function DashboardClient({ email, initialHealth, chartData, isFirstRun }: Props) {
   const [health] = useState(initialHealth)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [bannerDismissed, setBannerDismissed] = useState(false)
+  const showBanner = isFirstRun && !bannerDismissed
   const menuRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const initial = email[0].toUpperCase()
@@ -69,6 +72,23 @@ export default function DashboardClient({ email, initialHealth, chartData }: Pro
           )}
         </div>
       </header>
+
+      {/* ── First-run banner ─────────────────────────────────────── */}
+      {showBanner && (
+        <div className="mx-4 mt-4 flex items-start gap-3 rounded-2xl bg-stone-800 px-4 py-3 text-white">
+          <span className="text-lg leading-none mt-0.5">🌱</span>
+          <p className="flex-1 text-sm leading-snug">
+            Welcome! Start your first deep work session to grow your plant.
+          </p>
+          <button
+            onClick={() => setBannerDismissed(true)}
+            className="text-stone-400 hover:text-white transition-colors text-lg leading-none"
+            aria-label="Dismiss"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       {/* ── Main content ─────────────────────────────────────────── */}
       <main className="flex-1 flex flex-col items-center px-6 py-10 max-w-lg mx-auto w-full gap-6">

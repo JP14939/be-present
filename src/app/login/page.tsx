@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -51,7 +52,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-8 px-6">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-semibold text-stone-800">Be Present</h1>
-          <p className="text-stone-500 text-sm">Sign in to your account.</p>
+          <p className="text-stone-500 text-sm">Grow your plant. Stay focused.</p>
+          <Link href="/about" className="text-xs text-stone-400 hover:text-stone-600 transition-colors underline underline-offset-2">
+            What is this?
+          </Link>
         </div>
 
         <form onSubmit={handleSignIn} className="space-y-4">
