@@ -131,6 +131,7 @@ export default function DeepWorkClient({ userId }: { userId: string }) {
       if (document.visibilityState === 'hidden') {
         awayStartRef.current = Date.now()
         document.title = '⚠ Be Present'
+        setIsAway(true)
       } else if (document.visibilityState === 'visible' && awayStartRef.current !== null) {
         const awaySec = Math.floor((Date.now() - awayStartRef.current) / 1000)
         awayStartRef.current = null
@@ -161,8 +162,6 @@ export default function DeepWorkClient({ userId }: { userId: string }) {
         }
 
         setIsAway(false)
-      } else if (document.visibilityState === 'hidden') {
-        setIsAway(true)
       }
     }
 
